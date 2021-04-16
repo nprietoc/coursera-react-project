@@ -1,76 +1,51 @@
-import React, {useState, Fragment} from 'react';
-import { Media } from 'reactstrap';
+import React, { useState } from "react";
+import { Card, CardImg, CardImgOverlay, CardTitle, CardBody, CardText } from "reactstrap";
 
+const Menu = (props) => {
+  const { inform } = props;
+  const [objeto, setObjeto] = useState({});
 
-const Menu = () => {
-    
-   const [lista, setLista] = useState([
-    {   
-        id: 0,
-        name:'Uthappizza',
-        image: 'assets/images/uthappizza.png',
-        category: 'mains',
-        label:'Hot',
-        price:'4.99',
-        description:'A unique combination of Indian Uthappam (pancake) and Italian pizza, topped with Cerignola olives, ripe vine cherry tomatoes, Vidalia onion, Guntur chillies and Buffalo Paneer.' 
-    },
-    {
-        id: 1,
-        name:'Zucchipakoda',
-        image: 'assets/images/zucchipakoda.png',
-        category: 'appetizer',
-        label:'',
-        price:'1.99',
-        description:'Deep fried Zucchini coated with mildly spiced Chickpea flour batter accompanied with a sweet-tangy tamarind sauce'  
-    },
-    {
-        id: 2,
-        name:'Vadonut',
-        image: 'assets/images/vadonut.png',
-        category: 'appetizer',
-        label:'New',
-        price:'1.99',
-        description:'A quintessential ConFusion experience, is it a vada or is it a donut?'
-     },
-     {
-        id: 3,
-        name:'ElaiCheese Cake',
-        image: 'assets/images/elaicheesecake.png',
-        category: 'dessert',
-        label:'',
-        price:'2.99',
-        description:'A delectable, semi-sweet New York Style Cheese Cake, with Graham cracker crust and spiced with Indian cardamoms'   
+  const desplegar = (plato) => {
+    if (plato != null) {
+      return (
+        <Card>
+          <CardImg top src={plato.image} alt={plato.name} />
+          <CardBody>
+            <CardTitle>{plato.name}</CardTitle>
+            <CardText>{plato.description}</CardText>
+          </CardBody>
+        </Card>
+      );
+    } else {
+      return <div></div>;
     }
-     
-]) 
-    
-    return(
-        <Fragment>
-            <div className="container"></div>
-            {
-                lista.map((item, index) => 
-                    <div key={index} className="col-12 mt-5">
-                        <Media tag="li">
-                            <Media left middle>
-                                <Media object src={item.image} alt={item.name}></Media>
-                            </Media>
-                            <Media body className="ml-5">
-                                <Media heading>{item.name}</Media>
-                                <p>{item.description}</p>
-                                <span>{item.price}</span>
-                            </Media>
-                            
-                            
-                        </Media>                   
-                    </div>
+  };
 
-                                                           
-                    
-                )
-            }
-            
-        </Fragment>
-    );
-}
+  const cambioEstado = (dish) => {
+    setObjeto(dish);
+  };
+
+  return (
+    <div className="container">
+      <div className="row">
+        {inform.map((item, index) => (
+          <div key={index} className="col-12 col-md-5 m-1">
+            <Card onClick={() => cambioEstado(item)}>
+              <CardImg width="100%" src={item.image} alt={item.name}></CardImg>
+
+              <CardImgOverlay>
+                <CardTitle>{item.name}</CardTitle>
+              </CardImgOverlay>
+              <p></p>
+            </Card>
+          </div>
+        ))}
+      </div>
+      <div className="row">
+        <div className="col-12 col-md-5 m-1">{desplegar(objeto)}</div>
+      </div>
+    </div>
+  );
+};
 
 export default Menu;
