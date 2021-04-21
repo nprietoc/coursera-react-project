@@ -1,20 +1,41 @@
 import React, { useState } from "react";
-import { Card, CardImg, CardImgOverlay, CardTitle, CardBody, CardText } from "reactstrap";
+import DishdetailComponent from "../../src/components/DishdetailComponent";
+import {  Card, CardImg, CardImgOverlay, CardTitle, CardBody, CardText,} from "reactstrap";
 
 const Menu = (props) => {
   const { inform } = props;
-  const [objeto, setObjeto] = useState({});
+  const [objeto, setObjeto] = useState(null);
 
   const desplegar = (plato) => {
     if (plato != null) {
       return (
-        <Card>
-          <CardImg top src={plato.image} alt={plato.name} />
-          <CardBody>
-            <CardTitle>{plato.name}</CardTitle>
-            <CardText>{plato.description}</CardText>
-          </CardBody>
-        </Card>
+        <div className="row" >
+          <div className="col-12 col-md-5 m-1">
+          <Card>
+            <CardImg top src={plato.image} alt={plato.name} />
+            <CardBody>
+              <CardTitle>{plato.name}</CardTitle>
+              <CardText>{plato.description}</CardText>
+            </CardBody>
+          </Card>
+          </div>
+        
+          
+            <div className="col-12 col-md-5 m-1">
+              <h4>Comments</h4>
+              <ul className="list-unstyled">
+                {plato.comments.map((value, index) => (
+                  <div key={index}>
+                    <li>{value.comment}</li>
+                    <p>--{value.author}
+                    <span>,{value.date}</span>
+                    </p>                    
+                  </div>                  
+                ))}
+              </ul>
+            </div>
+          
+        </div>
       );
     } else {
       return <div></div>;
@@ -36,13 +57,12 @@ const Menu = (props) => {
               <CardImgOverlay>
                 <CardTitle>{item.name}</CardTitle>
               </CardImgOverlay>
-              <p></p>
             </Card>
           </div>
         ))}
       </div>
-      <div className="row">
-        <div className="col-12 col-md-5 m-1">{desplegar(objeto)}</div>
+      <div>
+        <DishdetailComponent detalle={desplegar(objeto)} info={inform} />
       </div>
     </div>
   );
