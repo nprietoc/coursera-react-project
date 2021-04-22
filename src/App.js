@@ -1,12 +1,10 @@
-import React,{useState} from 'react';
+import React from 'react';
 import { Navbar, NavbarBrand } from 'reactstrap';
 import MenuComponente from './components/MenuComponent';
 import { DISHES } from './shared/dishes';
 
 function App() {
-  const [data, setData] = useState(DISHES)
-
-  
+    
   
   return (
     <div>
@@ -16,7 +14,7 @@ function App() {
         </div>
       </Navbar>
       
-      <MenuComponente inform={data} />
+      <MenuComponente inform={DISHES} />
       
   </div>
   );

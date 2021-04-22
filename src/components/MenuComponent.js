@@ -1,49 +1,13 @@
 import React, { useState } from "react";
 import DishdetailComponent from "../../src/components/DishdetailComponent";
-import {  Card, CardImg, CardImgOverlay, CardTitle, CardBody, CardText,} from "reactstrap";
+import {  Card, CardImg, CardImgOverlay, CardTitle} from "reactstrap";
 
 const Menu = (props) => {
   const { inform } = props;
-  const [objeto, setObjeto] = useState(null);
-
-  const desplegar = (plato) => {
-    if (plato != null) {
-      return (
-        <div className="row" >
-          <div className="col-12 col-md-5 m-1">
-          <Card>
-            <CardImg top src={plato.image} alt={plato.name} />
-            <CardBody>
-              <CardTitle>{plato.name}</CardTitle>
-              <CardText>{plato.description}</CardText>
-            </CardBody>
-          </Card>
-          </div>
-        
-          
-            <div className="col-12 col-md-5 m-1">
-              <h4>Comments</h4>
-              <ul className="list-unstyled">
-                {plato.comments.map((value, index) => (
-                  <div key={index}>
-                    <li>{value.comment}</li>
-                    <p>--{value.author}
-                    <span>,{value.date}</span>
-                    </p>                    
-                  </div>                  
-                ))}
-              </ul>
-            </div>
-          
-        </div>
-      );
-    } else {
-      return <div></div>;
-    }
-  };
+  const [objetoSeleccionado, setObjetoSeleccionado] = useState(null);  
 
   const cambioEstado = (dish) => {
-    setObjeto(dish);
+    setObjetoSeleccionado(dish);
   };
 
   return (
@@ -62,7 +26,7 @@ const Menu = (props) => {
         ))}
       </div>
       <div>
-        <DishdetailComponent detalle={desplegar(objeto)} info={inform} />
+        <DishdetailComponent click={objetoSeleccionado}/>
       </div>
     </div>
   );
