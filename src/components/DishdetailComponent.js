@@ -35,7 +35,7 @@ const Detail = (props) => {
                   <li>{value.comment}</li>
                   <p>
                     --{value.author}
-                    <span>,{value.date}</span>
+                    <span>,{new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(value.date)))}</span>
                   </p>
                 </div>
               ))}
@@ -47,7 +47,7 @@ const Detail = (props) => {
 
   
   return(
-    <div>{renderDish(click)}</div>
+    <div className="container">{renderDish(click)}</div>
   )
 };
 

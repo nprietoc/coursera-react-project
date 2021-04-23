@@ -1,22 +1,11 @@
-import React from 'react';
-import { Navbar, NavbarBrand } from 'reactstrap';
-import MenuComponente from './components/MenuComponent';
-import { DISHES } from './shared/dishes';
+import React from "react";
+import Main from "./components/MainComponent";
 
 function App() {
-    
-  
   return (
-    <div>
-      <Navbar dark color="primary">
-        <div className="container">
-          <NavbarBrand href="/">Ristorante con Fusion</NavbarBrand>
-        </div>
-      </Navbar>
-      
-      <MenuComponente inform={DISHES} />
-      
-  </div>
+    <div className="App">
+      <Main />
+    </div>
   );
 }
 
