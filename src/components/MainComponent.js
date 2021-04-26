@@ -20,6 +20,12 @@ function Main() {
         />
     );
   }
+  const DishWithId = ({match}) => {
+    return(
+      <DishdetailComponent data={COMMENTS} plato={DISHES.filter((value) => value.id === parseInt(match.params.dishId,10))[0]} 
+        comentario={COMMENTS.filter((value) => value.dishId === parseInt(match.params.dishId,10))} />
+  );
+  }
   
   return (
     <div>
@@ -27,6 +33,7 @@ function Main() {
       <Switch>
         <Route path="/home" component={HomePage} />
         <Route exact path="/menu" component={() => <MenuComponent inform={DISHES} />}/>
+        <Route path="/menu/:dishId" component={DishWithId}/>
         <Route exact path="/contactus" component={ContactComponent} />
         <Redirect to="/home" />
       </Switch>      
