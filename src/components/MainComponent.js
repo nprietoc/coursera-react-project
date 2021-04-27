@@ -5,6 +5,7 @@ import ContactComponent from './ContactComponent';
 import DishdetailComponent from "./DishdetailComponent";
 import HeaderComponent from "./HeaderComponent";
 import FooterComponent from "./FooterComponent";
+import AboutComponent from './AboutComponent';
 import { DISHES } from "../shared/dishes";
 import { COMMENTS } from "../shared/comments";
 import { LEADERS } from "../shared/leaders";
@@ -22,7 +23,7 @@ function Main() {
   }
   const DishWithId = ({match}) => {
     return(
-      <DishdetailComponent data={COMMENTS} plato={DISHES.filter((value) => value.id === parseInt(match.params.dishId,10))[0]} 
+      <DishdetailComponent datos={COMMENTS} plato={DISHES.filter((value) => value.id === parseInt(match.params.dishId,10))[0]} 
         comentario={COMMENTS.filter((value) => value.dishId === parseInt(match.params.dishId,10))} />
   );
   }
@@ -35,6 +36,7 @@ function Main() {
         <Route exact path="/menu" component={() => <MenuComponent inform={DISHES} />}/>
         <Route path="/menu/:dishId" component={DishWithId}/>
         <Route exact path="/contactus" component={ContactComponent} />
+        <Route exact path="/aboutus" component={() => <AboutComponent leader={LEADERS} />}/>
         <Redirect to="/home" />
       </Switch>      
       <FooterComponent />

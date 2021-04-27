@@ -11,7 +11,7 @@ import {
 import { Link } from "react-router-dom";
 
 const Detail = (props) => {
-  const { data, plato, comentario } = props;
+  const { datos, plato, comentario } = props;
 
   const renderDish = () => {
     if (plato != null) {
@@ -36,7 +36,7 @@ const Detail = (props) => {
               </CardBody>
             </Card>
           </div>
-          {renderComments(data)}
+          {renderComments(datos)}
         </div>
       );
     } else {
