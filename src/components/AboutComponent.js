@@ -9,16 +9,18 @@ const About = (props) => {
         return(
             <div>
                 {leader.map((item, index) => (
-                    <div key={index}>
+                    <div key={index} className = "col-12 mt-5">
                         <Media list>
                             <Media tag="li">
-                                <Media object src={item.image} alt={item.name}/>
-                                <Media body>
+                                <Media left middle>
+                                    <Media object src={item.image} alt={item.name}/>
+                                </Media>
+                                <Media body className="ml-5">
                                     <Media heading>
                                         {item.name}
                                     </Media>
-                                    <Media>{item.designation}</Media>
-                                    {item.description}                                    
+                                    <p>{item.designation}</p>
+                                    <p>{item.description}</p>                                    
                                 </Media>                                
                             </Media>
                         </Media>
