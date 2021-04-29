@@ -1,12 +1,23 @@
 import React, { Fragment, useState } from "react";
-import {  Navbar,  NavbarBrand,  Nav,  NavbarToggler,  Collapse,  NavItem,  Jumbotron,} from "reactstrap";
+import {  Navbar,  NavbarBrand,  Nav,  NavbarToggler,  Collapse,  NavItem,  Jumbotron, Button, Modal, ModalHeader, ModalBody, FormGroup, Label, Input, Form} from "reactstrap";
 import { NavLink } from "react-router-dom";
 
 const Header = () => {
   const [estadoOpen, setEstadoOpen] = useState(false)
+  const [modalOpen, setModalOpen] = useState(false)
 
   const CambioEstado = () => {
     setEstadoOpen(!estadoOpen)
+  }
+
+  const CambioModal = () => {
+    setModalOpen(!modalOpen)
+  }
+
+  function handleLoggin(event) {
+    CambioModal()
+    alert("Username: " + this.username.value + "Password: " + this.password.value + " Remember: " + this.remember.checked);
+    event.stopPropagation();
   }
 
   return (
@@ -50,6 +61,13 @@ const Header = () => {
                 </NavLink>
               </NavItem>
             </Nav>
+            <Nav className="ml-auto">
+              <NavItem>
+                <Button outline onClick={() => CambioModal()}>
+                  <span className="fa fa-sign-in fa-lg"></span> Loggin
+                </Button>
+              </NavItem>
+            </Nav>
           </Collapse>
         </div>
       </Navbar>
@@ -68,6 +86,40 @@ const Header = () => {
           </div>
         </div>
       </Jumbotron>
+      <Modal isOpen={modalOpen} toggle={() => CambioModal()}>
+        <ModalHeader toggle={() => CambioModal()}>Login</ModalHeader>
+        <ModalBody>
+          <Form onSubmit={() => handleLoggin()}>
+            <FormGroup>
+              <Label htmlFor="username">
+                Username
+              </Label>
+              <Input
+              type="text"
+              id="username"
+              name="username"
+              >               
+              </Input>
+            </FormGroup>
+            <FormGroup>
+              <Label htmlFor="password">
+                Password
+              </Label>
+              <Input
+              type="password"
+              id="password"
+              name="password"
+              />               
+            </FormGroup>
+            <FormGroup check>
+              <Label check>
+                <Input type="checkbox" name="remember" />Remember Me
+              </Label>
+            </FormGroup>
+            <Button type="submit" value="submit" className="primary">Loggin</Button>
+          </Form>
+        </ModalBody>
+      </Modal>
     </Fragment>
   );
 };
