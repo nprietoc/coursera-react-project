@@ -1,17 +1,109 @@
-import React from "react";
-import {
-  Card,
-  CardImg,
-  CardTitle,
-  CardBody,
-  CardText,
-  Breadcrumb,
-  BreadcrumbItem,
-} from "reactstrap";
+import React, {useState} from "react";
+import { Card, CardImg, CardTitle, CardBody, CardText, Breadcrumb, BreadcrumbItem, Button, Label, Col, Row, Modal, ModalBody, ModalHeader} from "reactstrap";
 import { Link } from "react-router-dom";
+import { Control, LocalForm, Errors} from 'react-redux-form';
+
+const need = (val) => val && val.length;
+const maxrequired = (len) => (val) => !(val) || (val.length <= len);
+const minrequired = (len) => (val) => val && (val.length >= len);
 
 const Detail = (props) => {
   const { datos, plato, comentario } = props;
+  const [ estadoTog, setEstadoTog ] = useState(false);
+  
+  const CambioTog = () => {
+    setEstadoTog(!estadoTog)
+  }
+
+  function handleSubmit(values) {
+    console.log("current state is  : " + JSON.stringify(values));
+    alert("current state is  : " + JSON.stringify(values));
+  }
+
+  const CommentForm = () => {    
+    return(
+      <div>
+        <Button outline onClick={() => CambioTog()}>
+          <span className="fa fa-pencil"></span>
+          Submit Comment
+        </Button>
+        <Modal isOpen={estadoTog} toggle={() => CambioTog()}>
+          <ModalHeader>Submit Comment</ModalHeader>
+          <ModalBody>
+          <LocalForm onSubmit={(values) => handleSubmit(values)}>
+            <Row className="form-group">
+              <Label htmlFor="rating" md={12}>
+                Rating
+              </Label>                
+              <Col>
+                <Control.select
+                  model=".rating"                    
+                  name="rating"                    
+                  className="form-control">
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
+                </Control.select>
+              </Col>
+            </Row>              
+            <Row className="form-group">
+              <Label htmlFor="author" md={12}>
+                Your Name
+              </Label>
+              <Col>
+                <Control.text
+                  model=".author"
+                  id="author"
+                  name="author"
+                  placeholder="Your Name"
+                  className="form-control"
+                  validators={{
+                    need,
+                    minrequired: minrequired(3),
+                    maxrequired: maxrequired(15)
+                  }}
+                />
+                <Errors
+                  className="text-danger"
+                  model=".author"
+                  show="touched"
+                  messages={{
+                    need: 'Required',
+                    minrequired: 'Must be greater than 3 characters',
+                    maxrequired: 'Must be 15 characters or less'
+                  }}
+                  />
+              </Col>
+            </Row>              
+            <Row className="form-group">
+              <Label htmlFor="comment" md={12}>
+                Comment
+              </Label>
+              <Col md={12}>
+                <Control.textarea
+                  model=".message"
+                  id="message"
+                  name="message"
+                  rows="6"
+                  className="form-control"
+                />
+              </Col>
+            </Row>
+            <Row className="form-group">
+              <Col>
+                <Button type="submit" color="primary">
+                  Submit
+                </Button>
+              </Col>
+            </Row>
+          </LocalForm>
+          </ModalBody>
+          </Modal>
+        </div>
+    )
+  }
 
   const renderDish = () => {
     if (plato != null) {
@@ -66,6 +158,7 @@ const Detail = (props) => {
             </div>
           ))}
         </ul>
+        {CommentForm()}
       </div>
     );
   };
