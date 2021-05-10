@@ -8,7 +8,7 @@ const maxrequired = (len) => (val) => !(val) || (val.length <= len);
 const minrequired = (len) => (val) => val && (val.length >= len);
 
 const Detail = (props) => {
-  const { datos, plato, comentario } = props;
+  const { datos, plato, comentario, addComment, dishId } = props;
   const [ estadoTog, setEstadoTog ] = useState(false);
   
   const CambioTog = () => {
@@ -16,8 +16,9 @@ const Detail = (props) => {
   }
 
   function handleSubmit(values) {
-    console.log("current state is  : " + JSON.stringify(values));
-    alert("current state is  : " + JSON.stringify(values));
+    addComment(dishId, values.rating, values.author, values.comment);
+    console.log(values)
+    console.log(typeof(addComment))
   }
 
   const CommentForm = () => {    
@@ -40,6 +41,7 @@ const Detail = (props) => {
                   model=".rating"                    
                   name="rating"                    
                   className="form-control">
+                  <option></option>
                   <option>1</option>
                   <option>2</option>
                   <option>3</option>
@@ -158,7 +160,7 @@ const Detail = (props) => {
             </div>
           ))}
         </ul>
-        {CommentForm()}
+        {CommentForm(addComment)}
       </div>
     );
   };
