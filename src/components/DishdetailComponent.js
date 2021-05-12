@@ -2,13 +2,14 @@ import React, {useState} from "react";
 import { Card, CardImg, CardTitle, CardBody, CardText, Breadcrumb, BreadcrumbItem, Button, Label, Col, Row, Modal, ModalBody, ModalHeader} from "reactstrap";
 import { Link } from "react-router-dom";
 import { Control, LocalForm, Errors} from 'react-redux-form';
+import { Loading } from './LoadingComponent'
 
 const need = (val) => val && val.length;
 const maxrequired = (len) => (val) => !(val) || (val.length <= len);
 const minrequired = (len) => (val) => val && (val.length >= len);
 
 const Detail = (props) => {
-  const { datos, plato, comentario, addComment, dishId } = props;
+  const { datos, plato, comentario, addComment, dishId, isLoading, errMess } = props;
   const [ estadoTog, setEstadoTog ] = useState(false);
   
   const CambioTog = () => {
@@ -108,7 +109,25 @@ const Detail = (props) => {
   }
 
   const renderDish = () => {
-    if (plato != null) {
+    if (isLoading) {
+      return(
+          <div className="container">
+              <div className="row">            
+                  <Loading />
+              </div>
+          </div>
+      );
+  }
+  else if (errMess) {
+      return(
+          <div className="container">
+              <div className="row">            
+                  <h4>{errMess}</h4>
+              </div>
+          </div>
+      );
+  }
+  else if (plato != null) {
       return (
         <div className="row">
           <div className="col-12 col-md-5 m-1">
