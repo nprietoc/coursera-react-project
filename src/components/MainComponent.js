@@ -9,7 +9,9 @@ import AboutComponent from "./AboutComponent";
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { addComment, fetchDishes } from "../redux/ActionCreators";
+import { actions } from 'react-redux-form';
 
+// esta transforma el estado actual del store en los props que se dean pasar a un componente 
 const mapStateToProps = (state) => {
   return {
     dishes: state.dishes,
@@ -19,6 +21,7 @@ const mapStateToProps = (state) => {
   };
 };
 
+let resetFeedbackForm;
 let fetchDish;
 let addComments;
 const mapDispatchToProps = (dispatch) => {
@@ -26,6 +29,7 @@ const mapDispatchToProps = (dispatch) => {
     dispatch(addComment(dishId, rating, author, comment));
   };
   fetchDish = () => dispatch(fetchDishes())
+  resetFeedbackForm = () => dispatch(actions.reset('feedback'))
 };
 
 function Main(props) {
@@ -77,7 +81,7 @@ function Main(props) {
           component={() => <MenuComponent inform={dishes} />}
         />
         <Route path="/menu/:dishId" component={DishWithId} />
-        <Route exact path="/contactus" component={ContactComponent} />
+        <Route exact path="/contactus" component={() => <ContactComponent resetFeedbackForm={resetFeedbackForm}/>} />
         <Route
           exact
           path="/aboutus"
