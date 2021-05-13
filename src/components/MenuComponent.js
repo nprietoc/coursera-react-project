@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { Loading } from './LoadingComponent';
 import { baseUrl } from '../shared/baseUrl';
 
-
 const Menu = (props) => {
   const { inform } = props;
   
@@ -49,25 +48,24 @@ const Menu = (props) => {
       </div>
     );
   }
-
-  
-    return (
-      <div className="container">
-        <div className="row">
-        < Breadcrumb>
-          <BreadcrumbItem>
-            <Link to="/home">Home</Link>
-          </BreadcrumbItem>
-          <BreadcrumbItem active>Menu</BreadcrumbItem>
-        </Breadcrumb>
-        <div className="col-12">
-          <h3>Menu</h3>
-          <hr />
-        </div>
+  return (
+    <div className="container">
+      <div className="row">
+      < Breadcrumb>
+        <BreadcrumbItem>
+          <Link to="/home">Home</Link>
+        </BreadcrumbItem>
+        <BreadcrumbItem active>Menu</BreadcrumbItem>
+      </Breadcrumb>
+      <div className="col-12">
+        <h3>Menu</h3>
+        <hr />
       </div>
-      <div className="row">{menuItem()}</div>
     </div>
-  );
+    <div className="row">{menuItem()}</div>
+  </div>
+);
 }
 
-export default Menu;
+
+ export default Menu;

@@ -10,7 +10,7 @@ const maxrequired = (len) => (val) => !(val) || (val.length <= len);
 const minrequired = (len) => (val) => val && (val.length >= len);
 
 const Detail = (props) => {
-  const { datos, plato, comentario, addComment, dishId, isLoading, errMess } = props;
+  const { datos, plato, comentario, post, dishId, isLoading, errMess, commentsErrMess } = props;
   const [ estadoTog, setEstadoTog ] = useState(false);
   
   const CambioTog = () => {
@@ -18,12 +18,11 @@ const Detail = (props) => {
   }
 
   function handleSubmit(values) {
-    addComment(dishId, values.rating, values.author, values.comment);
-    console.log(values)
-    console.log(typeof(addComment))
+    post(dishId, values.rating, values.author, values.comment);
+    console.log(values)    
   }
 
-  const CommentForm = () => {    
+  const CommentForm = (item) => {    
     return(
       <div>
         <Button outline onClick={() => CambioTog()}>
@@ -109,8 +108,8 @@ const Detail = (props) => {
     )
   }
 
-  const renderDish = () => {
-    if (isLoading) {
+  const renderDish = (load, error) => {
+    if (load) {
       return(
           <div className="container">
               <div className="row">            
@@ -119,11 +118,11 @@ const Detail = (props) => {
           </div>
       );
   }
-  else if (errMess) {
+  else if (error) {
       return(
           <div className="container">
               <div className="row">            
-                  <h4>{errMess}</h4>
+                  <h4>{error}</h4>
               </div>
           </div>
       );
@@ -158,7 +157,7 @@ const Detail = (props) => {
     }
   };
 
-  const renderComments = () => {
+  const renderComments = (post) => {
     return (
       <div className="col-12 col-md-5 m-1">
         <h4>Comments</h4>
@@ -180,12 +179,12 @@ const Detail = (props) => {
             </div>
           ))}
         </ul>
-        {CommentForm(addComment)}
+        {CommentForm(post)}
       </div>
     );
   };
 
-  return <div className="container">{renderDish()}</div>;
+  return <div className="container">{renderDish(isLoading, errMess)}</div>;
 };
 
 export default Detail;

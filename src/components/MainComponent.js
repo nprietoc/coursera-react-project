@@ -8,7 +8,7 @@ import FooterComponent from "./FooterComponent";
 import AboutComponent from "./AboutComponent";
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { addComment, fetchComments, fetchDishes, fetchPromos } from "../redux/ActionCreators";
+import { postComment, fetchComments, fetchDishes, fetchPromos } from "../redux/ActionCreators";
 import { actions } from 'react-redux-form';
 
 // esta transforma el estado actual del store en los props que se dean pasar a un componente 
@@ -25,10 +25,10 @@ let fetchComment;
 let fetchProm;
 let resetFeedbackForm;
 let fetchDish;
-let addComments;
+let postComments;
 const mapDispatchToProps = (dispatch) => {
-  addComments = (dishId, rating, author, comment) => {
-    dispatch(addComment(dishId, rating, author, comment));
+  postComments = (dishId, rating, author, comment) => {
+    dispatch(postComment(dishId, rating, author, comment));
   };
   fetchDish = () => dispatch(fetchDishes())
   resetFeedbackForm = () => dispatch(actions.reset('feedback'))
@@ -75,7 +75,7 @@ function Main(props) {
           (value) => value.dishId === parseInt(match.params.dishId, 10)
         )}
         commentsErrMess={comments.errMess}
-        addComment={addComments}
+        post={postComments}
         dishId={parseInt(match.params.dishId, 10)}
       />
     );
