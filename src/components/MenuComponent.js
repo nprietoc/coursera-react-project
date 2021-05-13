@@ -2,6 +2,7 @@ import React from "react";
 import { Card, CardImg, CardImgOverlay, CardTitle, Breadcrumb, BreadcrumbItem,} from "reactstrap";
 import { Link } from "react-router-dom";
 import { Loading } from './LoadingComponent';
+import { baseUrl } from '../shared/baseUrl';
 
 
 const Menu = (props) => {
@@ -36,7 +37,7 @@ const Menu = (props) => {
              <Link to={`/menu/${item.id}`}>
                <CardImg
                  width="100%"
-                 src={item.image}
+                 src={baseUrl + item.image}
                  alt={item.name}
                ></CardImg>
                <CardImgOverlay>

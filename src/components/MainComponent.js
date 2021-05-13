@@ -8,7 +8,7 @@ import FooterComponent from "./FooterComponent";
 import AboutComponent from "./AboutComponent";
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { addComment, fetchDishes } from "../redux/ActionCreators";
+import { addComment, fetchComments, fetchDishes, fetchPromos } from "../redux/ActionCreators";
 import { actions } from 'react-redux-form';
 
 // esta transforma el estado actual del store en los props que se dean pasar a un componente 
@@ -21,6 +21,8 @@ const mapStateToProps = (state) => {
   };
 };
 
+let fetchComment;
+let fetchProm;
 let resetFeedbackForm;
 let fetchDish;
 let addComments;
@@ -30,6 +32,8 @@ const mapDispatchToProps = (dispatch) => {
   };
   fetchDish = () => dispatch(fetchDishes())
   resetFeedbackForm = () => dispatch(actions.reset('feedback'))
+  fetchComment = () => dispatch(fetchComments())
+  fetchProm = () => dispatch(fetchPromos())
 };
 
 function Main(props) {
@@ -37,7 +41,11 @@ function Main(props) {
 
   useEffect(() => {
     fetchDish();
+    fetchComment();
+    fetchProm();
   }, []);
+
+  console.log(`dishLoandig Main: ${dishes.isLoading}`)
 
   const HomePage = () => {
     return (
@@ -45,7 +53,9 @@ function Main(props) {
         dish={dishes.dishes.filter((value) => value.featured)[0]}
         dishesLoading={dishes.isLoading}
         dishesErrMess={dishes.errMess}
-        promotion={promotions.filter((value) => value.featured)[0]}
+        promotion={promotions.promotions.filter((value) => value.featured)[0]}
+        promosLoading={promotions.isLoading}
+        promosErrMess={promotions.errMess}
         leader={leaders.filter((value) => value.featured)[0]}
       />
     );
@@ -61,9 +71,10 @@ function Main(props) {
         }
         isLoading={dishes.isLoading}
         errMess={dishes.errMess}
-        comentario={comments.filter(
+        comentario={comments.comments.filter(
           (value) => value.dishId === parseInt(match.params.dishId, 10)
         )}
+        commentsErrMess={comments.errMess}
         addComment={addComments}
         dishId={parseInt(match.params.dishId, 10)}
       />

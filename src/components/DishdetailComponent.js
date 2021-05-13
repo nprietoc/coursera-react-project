@@ -2,7 +2,8 @@ import React, {useState} from "react";
 import { Card, CardImg, CardTitle, CardBody, CardText, Breadcrumb, BreadcrumbItem, Button, Label, Col, Row, Modal, ModalBody, ModalHeader} from "reactstrap";
 import { Link } from "react-router-dom";
 import { Control, LocalForm, Errors} from 'react-redux-form';
-import { Loading } from './LoadingComponent'
+import { Loading } from './LoadingComponent';
+import { baseUrl } from '../shared/baseUrl';
 
 const need = (val) => val && val.length;
 const maxrequired = (len) => (val) => !(val) || (val.length <= len);
@@ -142,7 +143,7 @@ const Detail = (props) => {
               <hr />
             </div>
             <Card>
-              <CardImg top src={plato.image} alt={plato.name} />
+              <CardImg top src={baseUrl + plato.image} alt={plato.name} />
               <CardBody>
                 <CardTitle>{plato.name}</CardTitle>
                 <CardText>{plato.description}</CardText>
