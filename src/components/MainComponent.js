@@ -8,8 +8,9 @@ import FooterComponent from "./FooterComponent";
 import AboutComponent from "./AboutComponent";
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { postComment, fetchComments, fetchDishes, fetchPromos } from "../redux/ActionCreators";
+import { postComment, fetchComments, fetchDishes, fetchPromos, fetchLeaders, postFeedback } from "../redux/ActionCreators";
 import { actions } from 'react-redux-form';
+
 
 // esta transforma el estado actual del store en los props que se dean pasar a un componente 
 const mapStateToProps = (state) => {
@@ -21,6 +22,8 @@ const mapStateToProps = (state) => {
   };
 };
 
+let postFeedbacks;
+let fetchLeader;
 let fetchComment;
 let fetchProm;
 let resetFeedbackForm;
@@ -34,6 +37,10 @@ const mapDispatchToProps = (dispatch) => {
   resetFeedbackForm = () => dispatch(actions.reset('feedback'))
   fetchComment = () => dispatch(fetchComments())
   fetchProm = () => dispatch(fetchPromos())
+  fetchLeader = () => dispatch(fetchLeaders())
+  postFeedbacks = (firstName, lastName, contact, email, agree, contactType, message) => {
+    dispatch(postFeedback(firstName, lastName, contact, email, agree, contactType, message));
+  }
 };
 
 function Main(props) {
@@ -43,6 +50,7 @@ function Main(props) {
     fetchDish();
     fetchComment();
     fetchProm();
+    fetchLeader();
   }, []);
 
   console.log(`dishLoandig Main: ${dishes.isLoading}`)
@@ -56,7 +64,9 @@ function Main(props) {
         promotion={promotions.promotions.filter((value) => value.featured)[0]}
         promosLoading={promotions.isLoading}
         promosErrMess={promotions.errMess}
-        leader={leaders.filter((value) => value.featured)[0]}
+        leader={leaders.leaders.filter((value) => value.featured)[0]}
+        leaderLoading={leaders.isLoading}
+        leaderErrMess={leaders.errMess}
       />
     );
   };
@@ -83,23 +93,24 @@ function Main(props) {
 
   return (
     <div>
-      <HeaderComponent />
-      <Switch>
-        <Route path="/home" component={() => HomePage()} />
-        <Route
-          exact
-          path="/menu"
-          component={() => <MenuComponent inform={dishes} />}
-        />
-        <Route path="/menu/:dishId" component={DishWithId} />
-        <Route exact path="/contactus" component={() => <ContactComponent resetFeedbackForm={resetFeedbackForm}/>} />
-        <Route
-          exact
-          path="/aboutus"
-          component={() => <AboutComponent leader={leaders} />}
-        />
-        <Redirect to="/home" />
-      </Switch>
+      <HeaderComponent />      
+        <Switch>
+            <Route path="/home" component={() => HomePage()} />
+            <Route
+              exact
+              path="/menu"
+              component={() => <MenuComponent inform={dishes} />}
+            />
+            <Route path="/menu/:dishId" component={DishWithId} />
+            <Route exact path="/contactus" component={() => <ContactComponent resetFeedbackForm={resetFeedbackForm}postF={postFeedbacks}/>}  />
+            <Route
+              exact
+              path="/aboutus"
+              component={() => <AboutComponent leader={leaders.leaders} aboutLoading={leaders.isLoading}
+              aboutErrMess={leaders.errMess}/>}
+            />
+            <Redirect to="/home" />
+          </Switch>      
       <FooterComponent />
     </div>
   );

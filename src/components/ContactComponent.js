@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Breadcrumb, BreadcrumbItem, Button, Label, Col, Row} from "reactstrap";
 import { Link } from "react-router-dom";
-import { Control, Form, Errors, actions} from 'react-redux-form';
+import { Control, Form, Errors} from 'react-redux-form';
 
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
@@ -19,8 +19,10 @@ class Contact extends Component {
    // para evitar que cuando se envie el formulario vaya a otra pagina porngo el prevent Default
   handleSubmit(values) {
     console.log("current state is  : " + JSON.stringify(values));
-    alert("current state is  : " + JSON.stringify(values)); 
-    this.props.resetFeedbackForm();      
+    // alert("current state is  : " + JSON.stringify(values)); 
+    this.props.resetFeedbackForm();
+    // console.log(this.props.postFeedback)  
+    this.props.postF(values.firstName, values.lastName, values.contact, values.email, values.agree, values.contactType, values.message);    
   }
 
   render() {

@@ -18,7 +18,7 @@ const Detail = (props) => {
   }
 
   function handleSubmit(values) {
-    post(dishId, values.rating, values.author, values.comment);
+    post(dishId, values.rating, values.author, values.message);
     console.log(values)    
   }
 
@@ -81,7 +81,7 @@ const Detail = (props) => {
               </Col>
             </Row>              
             <Row className="form-group">
-              <Label htmlFor="comment" md={12}>
+              <Label htmlFor="message" md={12}>
                 Comment
               </Label>
               <Col md={12}>

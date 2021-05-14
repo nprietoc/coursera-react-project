@@ -1,33 +1,46 @@
 import React from 'react';
 import { Breadcrumb, BreadcrumbItem, Card, CardBody, CardHeader, Media } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { Loading } from './LoadingComponent';
+import { baseUrl } from '../shared/baseUrl';
 
 const About = (props) => {
-    const {leader} = props
+    const {leader, aboutLoading, aboutErrMess} = props
 
-    const renderLeader = () => {
-        return(
-            <div>
-                {leader.map((item, index) => (
-                    <div key={index} className = "col-12 mt-5">
-                        <Media list>
-                            <Media tag="li">
-                                <Media left middle>
-                                    <Media object src={item.image} alt={item.name}/>
-                                </Media>
-                                <Media body className="ml-5">
-                                    <Media heading>
-                                        {item.name}
+    const renderLeader = (loader, error) => {
+        if (loader) {
+            return(
+                <Loading />
+            );
+        }
+        else if (error) {
+            return(
+                <h4>{error}</h4>
+            );
+        }
+        else 
+            return(
+                <div>
+                    {leader.map((item, index) => (
+                        <div key={index} className = "col-12 mt-5">
+                            <Media list>
+                                <Media tag="li">
+                                    <Media left middle>
+                                        <Media object src={baseUrl + item.image} alt={item.name}/>
                                     </Media>
-                                    <p>{item.designation}</p>
-                                    <p>{item.description}</p>                                    
-                                </Media>                                
+                                    <Media body className="ml-5">
+                                        <Media heading>
+                                            {item.name}
+                                        </Media>
+                                        <p>{item.designation}</p>
+                                        <p>{item.description}</p>                                    
+                                    </Media>                                
+                                </Media>
                             </Media>
-                        </Media>
-                    </div>
-                ))}
-            </div>
-        )
+                        </div>
+                    ))}
+                </div>
+            )
     }
 
     return(
@@ -86,7 +99,7 @@ const About = (props) => {
                 </div>
                 <div className="col-12">
                     <Media > 
-                        {renderLeader()}                         
+                        {renderLeader(aboutLoading, aboutErrMess)}                         
                     </Media>                    
                 </div>
             </div>

@@ -4,7 +4,7 @@ import { Loading } from './LoadingComponent';
 import { baseUrl } from '../shared/baseUrl';
 
 const Home = (props) => {
-    const {dish, promotion, leader, dishesLoading, dishesErrMess, promosLoading, promosErrMess} = props
+    const {dish, promotion, leader, dishesLoading, dishesErrMess, promosLoading, promosErrMess, leaderLoading, leaderErrMess} = props
 
     const renderCard = (item, loader, error) => {
         if (loader) {
@@ -40,7 +40,7 @@ const Home = (props) => {
                     {renderCard(promotion, promosLoading, promosErrMess)}
                 </div>
                 <div className="col-12 col-md m-1">
-                    {leader ? renderCard(leader) : ''}
+                    {renderCard(leader, leaderLoading, leaderErrMess)}
                 </div>
             </div>
         </div>
