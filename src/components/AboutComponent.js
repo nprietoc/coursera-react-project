@@ -3,6 +3,7 @@ import { Breadcrumb, BreadcrumbItem, Card, CardBody, CardHeader, Media } from 'r
 import { Link } from 'react-router-dom';
 import { Loading } from './LoadingComponent';
 import { baseUrl } from '../shared/baseUrl';
+import { Fade, Stagger } from 'react-animation-components';
 
 const About = (props) => {
     const {leader, aboutLoading, aboutErrMess} = props
@@ -21,24 +22,28 @@ const About = (props) => {
         else 
             return(
                 <div>
-                    {leader.map((item, index) => (
-                        <div key={index} className = "col-12 mt-5">
-                            <Media list>
-                                <Media tag="li">
-                                    <Media left middle>
-                                        <Media object src={baseUrl + item.image} alt={item.name}/>
-                                    </Media>
-                                    <Media body className="ml-5">
-                                        <Media heading>
-                                            {item.name}
+                    <Stagger in>
+                        {leader.map((item, index) => (
+                        <Fade>
+                            <div key={index} className = "col-12 mt-5">
+                                <Media list>
+                                    <Media tag="li">
+                                        <Media left middle>
+                                            <Media object src={baseUrl + item.image} alt={item.name}/>
                                         </Media>
-                                        <p>{item.designation}</p>
-                                        <p>{item.description}</p>                                    
-                                    </Media>                                
-                                </Media>
-                            </Media>
-                        </div>
-                    ))}
+                                        <Media body className="ml-5">
+                                            <Media heading>
+                                                {item.name}
+                                            </Media>
+                                            <p>{item.designation}</p>
+                                            <p>{item.description}</p>                                    
+                                        </Media>                                
+                                    </Media>
+                                </Media>                        
+                            </div>                        
+                        </Fade>
+                        ))}
+                    </Stagger>
                 </div>
             )
     }

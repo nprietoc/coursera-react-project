@@ -11,7 +11,6 @@ import { connect } from "react-redux";
 import { postComment, fetchComments, fetchDishes, fetchPromos, fetchLeaders, postFeedback } from "../redux/ActionCreators";
 import { actions } from 'react-redux-form';
 
-
 // esta transforma el estado actual del store en los props que se dean pasar a un componente 
 const mapStateToProps = (state) => {
   return {
@@ -66,7 +65,7 @@ function Main(props) {
         promotion={promotions.promotions.filter((value) => value.featured)[0]}
         promosLoading={promotions.isLoading}
         promosErrMess={promotions.errMess}
-        
+
         leader={leaders.leaders.filter((value) => value.featured)[0]}
         leaderLoading={leaders.isLoading}
         leaderErrMess={leaders.errMess}
@@ -96,24 +95,24 @@ function Main(props) {
 
   return (
     <div>
-      <HeaderComponent />      
-        <Switch>
-            <Route path="/home" component={() => HomePage()} />
-            <Route
-              exact
-              path="/menu"
-              component={() => <MenuComponent inform={dishes} />}
-            />
-            <Route path="/menu/:dishId" component={DishWithId} />
-            <Route exact path="/contactus" component={() => <ContactComponent resetFeedbackForm={resetFeedbackForm} postFeedback={postFeedbacks}/>}  />
-            <Route
-              exact
-              path="/aboutus"
-              component={() => <AboutComponent leader={leaders.leaders} aboutLoading={leaders.isLoading}
-              aboutErrMess={leaders.errMess}/>}
-            />
-            <Redirect to="/home" />
-          </Switch>      
+      <HeaderComponent />             
+          <Switch>
+              <Route path="/home" component={() => HomePage()} />
+              <Route
+                exact
+                path="/menu"
+                component={() => <MenuComponent inform={dishes} />}
+              />
+              <Route path="/menu/:dishId" component={DishWithId} />
+              <Route exact path="/contactus" component={() => <ContactComponent resetFeedbackForm={resetFeedbackForm} postFeedback={postFeedbacks}/>}  />
+              <Route
+                exact
+                path="/aboutus"
+                component={() => <AboutComponent leader={leaders.leaders} aboutLoading={leaders.isLoading}
+                aboutErrMess={leaders.errMess}/>}
+              />
+              <Redirect to="/home" />
+            </Switch>                
       <FooterComponent />
     </div>
   );

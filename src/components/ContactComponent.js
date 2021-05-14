@@ -19,7 +19,7 @@ class Contact extends Component {
    // para evitar que cuando se envie el formulario vaya a otra pagina porngo el prevent Default
   handleSubmit(values) {
     console.log("current state is  : " + JSON.stringify(values));
-    // alert("current state is  : " + JSON.stringify(values)); 
+    alert("current state is  : " + JSON.stringify(values)); 
     this.props.resetFeedbackForm();      
     this.props.postFeedback(values.firstName, values.lastName, values.contact, values.email, values.agree, values.contactType, values.message);    
   }

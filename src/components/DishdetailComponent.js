@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { Control, LocalForm, Errors} from 'react-redux-form';
 import { Loading } from './LoadingComponent';
 import { baseUrl } from '../shared/baseUrl';
+import { FadeTransform, Fade, Stagger } from 'react-animation-components';
+
 
 const need = (val) => val && val.length;
 const maxrequired = (len) => (val) => !(val) || (val.length <= len);
@@ -141,13 +143,18 @@ const Detail = (props) => {
               <h3>{plato.name}</h3>
               <hr />
             </div>
-            <Card>
-              <CardImg top src={baseUrl + plato.image} alt={plato.name} />
-              <CardBody>
-                <CardTitle>{plato.name}</CardTitle>
-                <CardText>{plato.description}</CardText>
-              </CardBody>
-            </Card>
+            <FadeTransform in
+                transformProps={{
+                    exitTransform: 'scale(0.5) translateY(-50%)'
+                }}>
+              <Card>
+                <CardImg top src={baseUrl + plato.image} alt={plato.name} />
+                <CardBody>
+                  <CardTitle>{plato.name}</CardTitle>
+                  <CardText>{plato.description}</CardText>
+                </CardBody>
+              </Card>
+            </FadeTransform>
           </div>
           {renderComments(datos)}
         </div>
@@ -162,22 +169,26 @@ const Detail = (props) => {
       <div className="col-12 col-md-5 m-1">
         <h4>Comments</h4>
         <ul className="list-unstyled">
-          {comentario.map((value, index) => (
-            <div key={index}>
-              <li>{value.comment}</li>
-              <p>
-                --{value.author}
-                <span>
-                  ,
-                  {new Intl.DateTimeFormat("en-US", {
-                    year: "numeric",
-                    month: "short",
-                    day: "2-digit",
-                  }).format(new Date(Date.parse(value.date)))}
-                </span>
-              </p>
-            </div>
-          ))}
+          <Stagger in>
+            {comentario.map((value, index) => (
+              <Fade in>
+                <div key={index}>
+                  <li>{value.comment}</li>
+                  <p>
+                    --{value.author}
+                    <span>
+                      ,
+                      {new Intl.DateTimeFormat("en-US", {
+                        year: "numeric",
+                        month: "short",
+                        day: "2-digit",
+                      }).format(new Date(Date.parse(value.date)))}
+                    </span>
+                  </p>
+                </div>
+              </Fade>
+            ))}
+          </Stagger>
         </ul>
         {CommentForm(post)}
       </div>
