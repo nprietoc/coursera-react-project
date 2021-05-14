@@ -29,6 +29,8 @@ let fetchProm;
 let resetFeedbackForm;
 let fetchDish;
 let postComments;
+
+
 const mapDispatchToProps = (dispatch) => {
   postComments = (dishId, rating, author, comment) => {
     dispatch(postComment(dishId, rating, author, comment));
@@ -64,6 +66,7 @@ function Main(props) {
         promotion={promotions.promotions.filter((value) => value.featured)[0]}
         promosLoading={promotions.isLoading}
         promosErrMess={promotions.errMess}
+        
         leader={leaders.leaders.filter((value) => value.featured)[0]}
         leaderLoading={leaders.isLoading}
         leaderErrMess={leaders.errMess}
@@ -102,7 +105,7 @@ function Main(props) {
               component={() => <MenuComponent inform={dishes} />}
             />
             <Route path="/menu/:dishId" component={DishWithId} />
-            <Route exact path="/contactus" component={() => <ContactComponent resetFeedbackForm={resetFeedbackForm}postF={postFeedbacks}/>}  />
+            <Route exact path="/contactus" component={() => <ContactComponent resetFeedbackForm={resetFeedbackForm} postFeedback={postFeedbacks}/>}  />
             <Route
               exact
               path="/aboutus"
